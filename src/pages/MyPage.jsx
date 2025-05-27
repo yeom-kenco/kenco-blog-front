@@ -11,6 +11,8 @@ export default function MyPage() {
   const [myComments, setMyComments] = useState([])
   const { user } = useSelector(state => state.auth)
   const [username, setUsername] = useState(user?.username || '')
+  const [currentPw, setCurrentPw] = useState('')
+  const [newPw, setNewPw] = useState('')
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
@@ -33,6 +35,17 @@ export default function MyPage() {
       navigate('/')
     } catch (err) {
       alert('회원 탈퇴 실패: ' + err.response?.data?.message)
+    }
+  }
+
+  const handleChangePassword = async () => {
+    try {
+      await axios.patch('/users/me/password', { currentPw, newPw }, { withCredentials: true })
+      alert('비밀번호가 성공적으로 변경되었습니다.')
+      setCurrentPw('')
+      setNewPw('')
+    } catch (err) {
+      alert('변경 실패: ' + err.response?.data?.message)
     }
   }
 
@@ -78,9 +91,25 @@ export default function MyPage() {
       />
       <button onClick={handleUpdate}>수정 완료</button>
 
-      <button onClick={handleDeleteAccount} style={{ marginTop: '20px', color: 'red' }}>
-        회원 탈퇴
-      </button>
+      <h3>🔐 비밀번호 변경</h3>
+      <input
+        type="password"
+        placeholder="현재 비밀번호"
+        value={currentPw}
+        onChange={e => setCurrentPw(e.target.value)}
+      />
+      <input
+        type="password"
+        placeholder="새 비밀번호"
+        value={newPw}
+        onChange={e => setNewPw(e.target.value)}
+      />
+      <button onClick={handleChangePassword}>변경하기</button>
+      <div>
+        <button onClick={handleDeleteAccount} style={{ marginTop: '20px', color: 'red' }}>
+          회원 탈퇴
+        </button>
+      </div>
     </div>
   )
 }

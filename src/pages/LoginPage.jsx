@@ -2,9 +2,11 @@ import { useState } from 'react'
 import axios from '../api/axios'
 import { useDispatch } from 'react-redux'
 import { setUser } from '../store/authSlice'
+import { useNavigate } from 'react-router-dom'
 
 export default function LoginPage() {
   const dispatch = useDispatch()
+  const navigate = useNavigate()
   const [form, setForm] = useState({ email: '', password: '' })
 
   const handleChange = e => {
@@ -17,6 +19,7 @@ export default function LoginPage() {
       const res = await axios.post('/auth/login', form, { withCredentials: true })
       dispatch(setUser(res.data.user)) // ✅ 전체 유저 정보 저장
       alert(res.data.message)
+      navigate('/')
     } catch (err) {
       alert('로그인 실패: ' + err.response?.data?.message)
     }
