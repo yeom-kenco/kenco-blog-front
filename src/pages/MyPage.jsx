@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react'
 import axios from '../api/axios'
 import { useSelector, useDispatch } from 'react-redux'
 import { setUser } from '../store/authSlice'
+import { clearUser } from '../store/authSlice'
+import { useNavigate } from 'react-router-dom'
 
 export default function MyPage() {
   const [myPosts, setMyPosts] = useState([])
@@ -10,6 +12,7 @@ export default function MyPage() {
   const { user } = useSelector(state => state.auth)
   const [username, setUsername] = useState(user?.username || '')
   const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   const handleUpdate = async () => {
     try {
@@ -18,6 +21,18 @@ export default function MyPage() {
       alert('이름 수정 완료!')
     } catch (err) {
       alert('수정 실패: ' + err.response?.data?.message)
+    }
+  }
+
+  const handleDeleteAccount = async () => {
+    if (!window.confirm('정말로 탈퇴하시겠습니까? 이 작업은 되돌릴 수 없습니다.')) return
+    try {
+      await axios.delete('/users/me', { withCredentials: true })
+      dispatch(clearUser())
+      alert('회원 탈퇴가 완료되었습니다.')
+      navigate('/')
+    } catch (err) {
+      alert('회원 탈퇴 실패: ' + err.response?.data?.message)
     }
   }
 
@@ -62,6 +77,10 @@ export default function MyPage() {
         placeholder="새 사용자 이름"
       />
       <button onClick={handleUpdate}>수정 완료</button>
+
+      <button onClick={handleDeleteAccount} style={{ marginTop: '20px', color: 'red' }}>
+        회원 탈퇴
+      </button>
     </div>
   )
 }
