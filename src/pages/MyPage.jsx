@@ -13,6 +13,7 @@ export default function MyPage() {
   const [username, setUsername] = useState(user?.username || '')
   const [currentPw, setCurrentPw] = useState('')
   const [newPw, setNewPw] = useState('')
+  const [file, setFile] = useState(null)
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
@@ -23,6 +24,23 @@ export default function MyPage() {
       alert('이름 수정 완료!')
     } catch (err) {
       alert('수정 실패: ' + err.response?.data?.message)
+    }
+  }
+
+  const handleUpload = async () => {
+    if (!file) return
+    const formData = new FormData()
+    formData.append('image', file)
+
+    try {
+      const res = await axios.patch('/users/me/profile-img', formData, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+        withCredentials: true,
+      })
+      dispatch(setUser(res.data.user))
+      alert('업로드 완료!')
+    } catch (err) {
+      alert('업로드 실패: ' + err.response?.data?.message)
     }
   }
 
@@ -66,6 +84,13 @@ export default function MyPage() {
     <div>
       <h2>마이페이지</h2>
 
+      <h3>🖼️ 프로필 이미지</h3>
+      <input type="file" accept="image/*" onChange={e => setFile(e.target.files[0])} />
+      <button onClick={handleUpload}>이미지 업로드</button>
+      {user.profileImg && (
+        <img src={`http://localhost:5000${user.profileImg}`} alt="프로필" width="100" />
+      )}
+
       <h3>📌 내가 쓴 글</h3>
       {myPosts.map(p => (
         <p key={p._id}>📝 {p.title}</p>
@@ -79,7 +104,7 @@ export default function MyPage() {
       <h3>💬 내가 단 댓글</h3>
       {myComments.map(c => (
         <p key={c._id}>
-          🔹 [{c.post.title}] {c.content}
+          🔹 [{c.post?.title || '삭제된 게시글'}] {c.content}
         </p>
       ))}
 

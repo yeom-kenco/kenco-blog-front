@@ -20,9 +20,11 @@ export default function PostDetailPage() {
     const fetchPost = async () => {
       const res = await axios.get(`/posts/${id}`)
       setPost(res.data)
+      setLikeCount(res.data.likes.length)
+      setLiked(user && res.data.likes.includes(user._id))
     }
     fetchPost()
-  }, [id])
+  }, [id, user])
 
   // 댓글 불러오기
   useEffect(() => {
@@ -32,17 +34,6 @@ export default function PostDetailPage() {
     }
     fetchComments()
   }, [id])
-
-  // 좋아요 여부 초기 설정
-  useEffect(() => {
-    const fetchPost = async () => {
-      const res = await axios.get(`/posts/${id}`)
-      setPost(res.data)
-      setLikeCount(res.data.likes.length)
-      setLiked(user && res.data.likes.includes(user._id))
-    }
-    fetchPost()
-  }, [id, user])
 
   // 좋아요 토글 핸들러
   const handleToggleLike = async () => {
@@ -65,7 +56,6 @@ export default function PostDetailPage() {
         { withCredentials: true }
       )
 
-      // ✅ 여기서 author 정보 수동으로 덧붙이기
       const newComment = {
         ...res.data.comment,
         author: {
@@ -113,7 +103,21 @@ export default function PostDetailPage() {
       <h2>{post.title}</h2>
       <p>작성자: {post.author.username}</p>
       <p>작성일: {new Date(post.createdAt).toLocaleDateString()}</p>
-      <div dangerouslySetInnerHTML={{ __html: post.content }} />
+
+      {/* 이미지 깨짐 방지 스타일 */}
+      <style>
+        {`
+          .ql-editor img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 1rem 0;
+          }
+        `}
+      </style>
+
+      {/* 글 본문 렌더링 */}
+      <div className="ql-editor" dangerouslySetInnerHTML={{ __html: post.content }} />
 
       {isAuthor && (
         <div style={{ marginTop: '20px' }}>
