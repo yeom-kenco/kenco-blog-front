@@ -14,8 +14,8 @@ export default function LoginPage() {
   const handleLogin = async e => {
     e.preventDefault()
     try {
-      const res = await axios.post('/auth/login', form)
-      dispatch(setUser({ email: form.email }))
+      const res = await axios.post('/auth/login', form, { withCredentials: true })
+      dispatch(setUser(res.data.user)) // ✅ 전체 유저 정보 저장
       alert(res.data.message)
     } catch (err) {
       alert('로그인 실패: ' + err.response?.data?.message)
