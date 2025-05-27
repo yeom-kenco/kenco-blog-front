@@ -2,16 +2,18 @@ import { useSelector } from 'react-redux'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import axios from '../api/axios'
+import CommentItem from '../components/CommentItem'
 
 export default function PostDetailPage() {
   const { id } = useParams()
   const [post, setPost] = useState(null)
-  const { user } = useSelector(state => state.auth)
-  console.log('로그인된 유저 정보:', user)
-  console.log('게시글 정보:', post)
+  const [comments, setComments] = useState([])
+  const [commentInput, setCommentInput] = useState('')
 
+  const { user } = useSelector(state => state.auth)
   const navigate = useNavigate()
 
+  // 게시글 불러오기
   useEffect(() => {
     const fetchPost = async () => {
       const res = await axios.get(`/posts/${id}`)
@@ -20,9 +22,50 @@ export default function PostDetailPage() {
     fetchPost()
   }, [id])
 
-  if (!post) return <p>로딩 중...</p>
+  // 댓글 불러오기
+  useEffect(() => {
+    const fetchComments = async () => {
+      const res = await axios.get(`/comments/${id}`)
+      setComments(res.data)
+    }
+    fetchComments()
+  }, [id])
 
-  const isAuthor = user && user._id === post.author._id
+  // 댓글 작성
+  const handleAddComment = async () => {
+    if (!commentInput.trim()) return
+    try {
+      const res = await axios.post(
+        '/comments',
+        { content: commentInput, postId: id },
+        { withCredentials: true }
+      )
+
+      // ✅ 여기서 author 정보 수동으로 덧붙이기
+      const newComment = {
+        ...res.data.comment,
+        author: {
+          _id: user._id,
+          username: user.username,
+        },
+      }
+
+      setComments(prev => [newComment, ...prev])
+      setCommentInput('')
+    } catch (err) {
+      alert('댓글 작성 실패: ' + err.response?.data?.message)
+    }
+  }
+
+  const handleDeleteComment = id => {
+    setComments(prev => prev.filter(c => c._id !== id))
+  }
+
+  const handleUpdateComment = (id, newContent) => {
+    setComments(prev => prev.map(c => (c._id === id ? { ...c, content: newContent } : c)))
+  }
+
+  const isAuthor = user && String(user._id) === String(post?.author?._id)
 
   const handleDelete = async () => {
     if (!window.confirm('정말 삭제할까요?')) return
@@ -39,6 +82,8 @@ export default function PostDetailPage() {
     navigate(`/write?id=${post._id}`, { state: { post } })
   }
 
+  if (!post) return <p>로딩 중...</p>
+
   return (
     <div>
       <h2>{post.title}</h2>
@@ -46,12 +91,43 @@ export default function PostDetailPage() {
       <p>작성일: {new Date(post.createdAt).toLocaleDateString()}</p>
       <div dangerouslySetInnerHTML={{ __html: post.content }} />
 
-      {/* ✅ 본인 글일 때만 노출 */}
       {isAuthor && (
         <div style={{ marginTop: '20px' }}>
           <button onClick={handleEdit}>✏️ 수정</button>
           <button onClick={handleDelete}>🗑️ 삭제</button>
         </div>
+      )}
+
+      <hr />
+      <h3>댓글</h3>
+
+      {user ? (
+        <div style={{ marginBottom: '1rem' }}>
+          <textarea
+            value={commentInput}
+            onChange={e => setCommentInput(e.target.value)}
+            placeholder="댓글을 입력하세요"
+            rows={3}
+            style={{ width: '100%', resize: 'none' }}
+          />
+          <button onClick={handleAddComment}>댓글 작성</button>
+        </div>
+      ) : (
+        <p>댓글을 작성하려면 로그인하세요.</p>
+      )}
+
+      {/* 댓글 목록 */}
+      {comments.length === 0 ? (
+        <p>아직 댓글이 없습니다.</p>
+      ) : (
+        comments.map(c => (
+          <CommentItem
+            key={c._id}
+            comment={c}
+            onDelete={handleDeleteComment}
+            onUpdate={handleUpdateComment}
+          />
+        ))
       )}
     </div>
   )
