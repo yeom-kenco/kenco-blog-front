@@ -9,6 +9,8 @@ export default function PostDetailPage() {
   const [post, setPost] = useState(null)
   const [comments, setComments] = useState([])
   const [commentInput, setCommentInput] = useState('')
+  const [liked, setLiked] = useState(false)
+  const [likeCount, setLikeCount] = useState(0)
 
   const { user } = useSelector(state => state.auth)
   const navigate = useNavigate()
@@ -30,6 +32,28 @@ export default function PostDetailPage() {
     }
     fetchComments()
   }, [id])
+
+  // 좋아요 여부 초기 설정
+  useEffect(() => {
+    const fetchPost = async () => {
+      const res = await axios.get(`/posts/${id}`)
+      setPost(res.data)
+      setLikeCount(res.data.likes.length)
+      setLiked(user && res.data.likes.includes(user._id))
+    }
+    fetchPost()
+  }, [id, user])
+
+  // 좋아요 토글 핸들러
+  const handleToggleLike = async () => {
+    try {
+      const res = await axios.post(`/posts/${id}/like`, null, { withCredentials: true })
+      setLiked(res.data.liked)
+      setLikeCount(prev => (res.data.liked ? prev + 1 : prev - 1))
+    } catch (err) {
+      alert('좋아요 실패: ' + err.response?.data?.message)
+    }
+  }
 
   // 댓글 작성
   const handleAddComment = async () => {
@@ -97,6 +121,9 @@ export default function PostDetailPage() {
           <button onClick={handleDelete}>🗑️ 삭제</button>
         </div>
       )}
+
+      <button onClick={handleToggleLike}>{liked ? '💔 좋아요 취소' : '❤️ 좋아요'}</button>
+      <p>좋아요 수: {likeCount}</p>
 
       <hr />
       <h3>댓글</h3>
