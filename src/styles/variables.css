@@ -1,0 +1,19 @@
+/* 색상, 폰트, 여백 등 디자인 토큰 */
+
+:root {
+  /* 색상 */
+  --color-primary: #1e1e1e;
+  --color-bg: #f9f9f9;
+  --color-accent: #4b6ef5;
+  --color-border: #ddd;
+  --color-muted: #666;
+
+  /* 폰트 */
+  --font-base: 'Pretendard', sans-serif;
+
+  /* 여백 */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 32px;
+}

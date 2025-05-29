@@ -1,0 +1,10 @@
+/* 전체 레이아웃 구조나 폰트 세팅 */
+
+body {
+  font-family: var(--font-base);
+  background-color: var(--color-bg);
+  color: var(--color-primary);
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}

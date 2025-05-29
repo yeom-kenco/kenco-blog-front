@@ -1,0 +1,22 @@
+/* 반응형 미디어쿼리 */
+
+/* 기본은 모바일 기준 */
+.container {
+  width: 100%;
+  padding: var(--space-sm);
+}
+
+/* 태블릿 이상 */
+@media (min-width: 768px) {
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+}
+
+/* 데스크탑 이상 */
+@media (min-width: 1024px) {
+  .container {
+    max-width: 960px;
+  }
+}
