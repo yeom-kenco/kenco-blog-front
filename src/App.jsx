@@ -10,6 +10,11 @@ import LoginPage from './pages/LoginPage'
 import SignupPage from './pages/SignupPage'
 import MyPage from './pages/MyPage'
 import PrivateRoute from './routes/PrivateRoute'
+import Layout from './components/layout/Layout'
+import './styles/reset.css'
+import './styles/variables.css'
+import './styles/global.css'
+import './styles/media.css'
 
 function App() {
   const dispatch = useDispatch()
@@ -30,20 +35,21 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/write" element={<WritePage />} />
-        <Route path="/posts/:id" element={<PostDetailPage />} />
-        <Route path="/signup" element={<SignupPage />} />
-        {/* ✅ 마이페이지 보호 라우팅 */}
-        <Route
-          path="/mypage"
-          element={
-            <PrivateRoute>
-              <MyPage />
-            </PrivateRoute>
-          }
-        />
+        <Route element={<Layout />}>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/signup" element={<SignupPage />} />
+          <Route path="/write" element={<WritePage />} />
+          <Route path="/posts/:id" element={<PostDetailPage />} />
+          <Route
+            path="/mypage"
+            element={
+              <PrivateRoute>
+                <MyPage />
+              </PrivateRoute>
+            }
+          />
+        </Route>
       </Routes>
     </BrowserRouter>
   )

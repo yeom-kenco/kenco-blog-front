@@ -2,7 +2,7 @@ import { useSelector } from 'react-redux'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import axios from '../api/axios'
-import CommentItem from '../components/CommentItem'
+import CommentItem from '../components/comment/CommentItem'
 
 export default function PostDetailPage() {
   const { id } = useParams()

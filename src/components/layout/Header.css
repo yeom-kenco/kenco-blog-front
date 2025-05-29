@@ -1,0 +1,55 @@
+.header {
+  position: relative;
+  padding: 32px 24px 56px; /* 아래 여백 확보 */
+  background-color: white;
+  border-bottom: 1px solid #eee;
+  text-align: center;
+}
+
+.header-main .logo {
+  font-size: 2rem;
+  font-weight: bold;
+  color: var(--color-accent);
+  cursor: pointer;
+}
+
+.header-subtitle {
+  margin-top: 8px;
+  font-size: 0.95rem;
+  color: var(--color-muted);
+}
+
+.header-actions {
+  position: absolute;
+  right: 24px;
+  bottom: 16px;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.header-actions button {
+  margin-left: 2px;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 6px;
+  background-color: white;
+  color: var(--color-accent);
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.header-actions i {
+  font-size: 1.2rem;
+  color: var(--color-accent);
+  cursor: pointer;
+}
+
+.header-actions button:hover {
+  color: white;
+  background-color: var(--color-accent);
+}
+
+.header-actions i:hover {
+  color: var(--blue);
+}
