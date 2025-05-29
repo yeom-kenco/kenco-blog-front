@@ -28,34 +28,3 @@
   flex-direction: column;
   gap: var(--space-md);
 }
-
-.post-card {
-  border: 1px solid var(--color-border);
-  border-radius: 12px;
-  padding: var(--space-md);
-  background-color: white;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
-  transition: transform 0.2s ease;
-}
-
-.post-card:hover {
-  transform: translateY(-2px);
-}
-
-.post-title {
-  font-size: 1.25rem;
-  margin-bottom: var(--space-sm);
-}
-
-.post-snippet {
-  font-size: 0.95rem;
-  color: var(--color-muted);
-  margin-bottom: var(--space-sm);
-}
-
-.post-meta {
-  font-size: 0.8rem;
-  color: var(--color-muted);
-  display: flex;
-  justify-content: space-between;
-}
