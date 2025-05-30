@@ -38,6 +38,7 @@
 /* 중앙 영역 */
 .header-main {
   text-align: center;
+  margin-bottom: -20px;
 }
 
 .logo {
@@ -46,6 +47,9 @@
   color: var(--color-accent);
   margin: 0;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .header-subtitle {
@@ -103,4 +107,10 @@ i:hover {
   .header-subtitle {
     font-size: 0.75rem;
   }
+}
+
+.header-main img {
+  width: 45px;
+  height: auto;
+  transform: rotate(25deg);
 }

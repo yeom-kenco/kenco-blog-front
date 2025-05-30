@@ -18,7 +18,7 @@ export default function PostCard({ post }) {
             작성자: {post.author.username} · {new Date(post.createdAt).toLocaleDateString()}
           </div>
           <div className="post-stats">
-            🩷 {likeCount} 💬 {commentCount}
+            ❤️ {likeCount} 💬 {commentCount}
           </div>
         </div>
       </div>

@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { clearUser } from '../../store/authSlice'
 import axios from '../../api/axios'
 import 'bootstrap-icons/font/bootstrap-icons.css'
+import watermelonIcon from '../../assets/watermelon-icon-1.png'
 
 import './Header.css'
 
@@ -29,6 +30,7 @@ export default function Header() {
         <p className="header-subtitle">기록과 성장이 담긴 공간</p>
         <h1 className="logo" onClick={() => navigate('/')}>
           Kenco Blog
+          <img src={watermelonIcon} alt="수박" />
         </h1>
       </div>
 

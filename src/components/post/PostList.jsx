@@ -14,7 +14,7 @@ export default function PostList() {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const res = await axios.get(`/posts?page=${page}&limit=5`)
+        const res = await axios.get(`/posts?page=${page}&limit=6`)
         setPosts(res.data.posts)
         setTotalPages(res.data.totalPages)
       } catch (err) {

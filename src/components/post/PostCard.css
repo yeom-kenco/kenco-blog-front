@@ -76,6 +76,13 @@
   padding: 4px 8px;
 }
 
+/* ✅ 768px 이하일 때 */
+@media (max-width: 768px) {
+  .post-meta {
+    align-items: flex-start;
+  }
+}
+
 /* ✅ 380px 이하일 때 */
 @media (max-width: 380px) {
   .post-title {
