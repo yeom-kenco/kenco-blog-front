@@ -1,32 +1,39 @@
-import { Link } from 'react-router-dom'
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import watermelonLoading from '../../assets/watermelon-icon-3.png' // 로딩용
+import defaultThumbnail from '../../assets/default-thumbnail.jpeg' // 실제 썸네일용
 import './PostCard.css'
-import defaultThumbnail from '../../assets/default-thumbnail.jpeg'
-
-export default function PostCard({ post }) {
-  const thumbnail = extractThumbnail(post.content) || defaultThumbnail
-  const likeCount = post.likes?.length || 0
-  const commentCount = post.commentCount || 0
-
-  return (
-    <Link to={`/posts/${post._id}`} className="post-card">
-      {thumbnail && <img src={thumbnail} alt="썸네일" className="post-thumbnail" />}
-      {!thumbnail && <div className="thumbnail-placeholder">No Image</div>}
-      <div className="post-content">
-        <h2 className="post-title">{post.title}</h2>
-        <div className="post-meta">
-          <div>
-            작성자: {post.author.username} · {new Date(post.createdAt).toLocaleDateString()}
-          </div>
-          <div className="post-stats">
-            ❤️ {likeCount} 💬 {commentCount}
-          </div>
-        </div>
-      </div>
-    </Link>
-  )
-}
 
 function extractThumbnail(content) {
-  const match = content.match(/<img[^>]+src=["']([^"']+)["']/)
+  const match = content.match(/<img[^>]+src="([^">]+)"/)
   return match ? match[1] : null
+}
+
+export default function PostCard({ post }) {
+  const navigate = useNavigate()
+  const [imgLoaded, setImgLoaded] = useState(false)
+
+  const thumbnail = extractThumbnail(post.content) || defaultThumbnail
+
+  return (
+    <div className="post-card" onClick={() => navigate(`/posts/${post._id}`)}>
+      <div className="post-thumbnail-wrapper">
+        {!imgLoaded && (
+          <div className="image-skeleton">
+            <img src={watermelonLoading} alt="로딩 중" className="skeleton-watermelon" />
+          </div>
+        )}
+        <img
+          src={thumbnail}
+          alt={post.title}
+          className={`post-thumbnail ${imgLoaded ? 'fade-in' : 'hidden'}`}
+          onLoad={() => setImgLoaded(true)}
+        />
+      </div>
+      <h3 className="post-title">{post.title}</h3>
+      <p className="post-meta">
+        {post.author.username} · {new Date(post.createdAt).toLocaleDateString()}
+      </p>
+    </div>
+  )
 }

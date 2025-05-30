@@ -100,3 +100,45 @@
     height: 70px;
   }
 }
+
+.post-thumbnail-wrapper {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+.image-skeleton {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 99;
+}
+
+.skeleton-watermelon {
+  width: 70px;
+}
+
+.post-thumbnail {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+  transition: opacity 0.4s ease-in;
+}
+
+.fade-in {
+  opacity: 1;
+}
+
+.hidden {
+  opacity: 0;
+  position: absolute;
+}
