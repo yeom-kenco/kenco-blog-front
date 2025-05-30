@@ -1,30 +1,48 @@
+// components/post/PostList.jsx
+import { useEffect, useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
+import axios from '../../api/axios'
 import PostCard from './PostCard'
-
-const samplePosts = [
-  {
-    id: 1,
-    title: 'React로 블로그 만들기',
-    snippet: 'React와 Express를 이용해 블로그를 만들면서 배운 점들...',
-    author: 'ken',
-    date: '2025.05.27',
-    thumbnail: 'https://source.unsplash.com/random/300x200?blog',
-  },
-  {
-    id: 2,
-    title: '개발자 포트폴리오 작성 팁',
-    snippet: '채용자 입장에서 보는 포트폴리오, 이렇게 구성하세요!',
-    author: 'ken',
-    date: '2025.05.26',
-    thumbnail: 'https://source.unsplash.com/random/300x200?code',
-  },
-]
+import Pagination from './Pagination'
 
 export default function PostList() {
+  const [posts, setPosts] = useState([])
+  const [totalPages, setTotalPages] = useState(1)
+  const [searchParams, setSearchParams] = useSearchParams()
+  const page = parseInt(searchParams.get('page')) || 1
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const res = await axios.get(`/posts?page=${page}&limit=5`)
+        setPosts(res.data.posts)
+        setTotalPages(res.data.totalPages)
+      } catch (err) {
+        console.error('글 목록 불러오기 실패:', err)
+      }
+    }
+
+    fetchPosts()
+  }, [page])
+
   return (
-    <div className="post-list">
-      {samplePosts.map(post => (
-        <PostCard key={post.id} post={post} />
-      ))}
-    </div>
+    <section>
+      {posts.length === 0 ? (
+        <p>게시글이 없습니다.</p>
+      ) : (
+        <>
+          <div className="post-list">
+            {posts.map(post => (
+              <PostCard key={post._id} post={post} />
+            ))}
+          </div>
+          <Pagination
+            page={page}
+            totalPages={totalPages}
+            onPageChange={newPage => setSearchParams({ page: newPage })}
+          />
+        </>
+      )}
+    </section>
   )
 }

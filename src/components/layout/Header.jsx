@@ -26,10 +26,10 @@ export default function Header() {
   return (
     <header className="header">
       <div className="header-main">
+        <p className="header-subtitle">기록과 성장이 담긴 공간</p>
         <h1 className="logo" onClick={() => navigate('/')}>
           Kenco Blog
         </h1>
-        <p className="header-subtitle">개발자의 기록과 성장이 담긴 공간 ✍️</p>
       </div>
 
       <div className="header-actions">

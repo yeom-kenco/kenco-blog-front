@@ -3,6 +3,9 @@ import axios from '../api/axios'
 import { useDispatch } from 'react-redux'
 import { setUser } from '../store/authSlice'
 import { useNavigate } from 'react-router-dom'
+import './LoginPage.css'
+
+import watermelonIcon from '../assets/watermelon-icon-2.png' // ✅ 이미지 import
 
 export default function LoginPage() {
   const dispatch = useDispatch()
@@ -17,7 +20,7 @@ export default function LoginPage() {
     e.preventDefault()
     try {
       const res = await axios.post('/auth/login', form, { withCredentials: true })
-      dispatch(setUser(res.data.user)) // ✅ 전체 유저 정보 저장
+      dispatch(setUser(res.data.user))
       alert(res.data.message)
       navigate('/')
     } catch (err) {
@@ -26,11 +29,23 @@ export default function LoginPage() {
   }
 
   return (
-    <form onSubmit={handleLogin}>
-      <h2>로그인</h2>
-      <input name="email" placeholder="이메일" onChange={handleChange} />
-      <input name="password" type="password" placeholder="비밀번호" onChange={handleChange} />
-      <button type="submit">로그인</button>
-    </form>
+    <div className="login-page">
+      <div className="login-wrapper">
+        <form onSubmit={handleLogin} className="login-form">
+          <div className="login-title">
+            <img src={watermelonIcon} alt="수박" />
+          </div>
+          <input name="email" placeholder="이메일" onChange={handleChange} required />
+          <input
+            name="password"
+            type="password"
+            placeholder="비밀번호"
+            onChange={handleChange}
+            required
+          />
+          <button type="submit">로그인</button>
+        </form>
+      </div>
+    </div>
   )
 }

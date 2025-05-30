@@ -2,9 +2,9 @@
 
 :root {
   /* 색상 */
-  --color-primary: #1e1e1e;
-  --color-bg: #f9f9f9;
-  --color-accent: #4b6ef5;
+  --color-primary: #f54d41;
+  --color-bg: rgb(249, 249, 249);
+  --color-accent: rgb(105, 187, 212);
   --color-border: #ddd;
   --color-muted: #666;
 
