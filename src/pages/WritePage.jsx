@@ -34,7 +34,7 @@ export default function WritePage() {
         })
 
         const range = quillRef.current.getEditor().getSelection()
-        const imageUrl = `http://localhost:5000${res.data.url}`
+        const imageUrl = res.data.url // ✅ 서버가 보내준 절대경로를 그대로 사용
         quillRef.current.getEditor().insertEmbed(range.index, 'image', imageUrl)
         setContent(quillRef.current.getEditor().root.innerHTML)
       } catch (err) {
