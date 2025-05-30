@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
 import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
-import { setUser, clearUser } from './store/authSlice'
+import { setUser } from './store/authSlice'
 import 'react-toastify/dist/ReactToastify.css'
 import { ToastContainer } from 'react-toastify'
 import axios from './api/axios'
@@ -29,10 +29,12 @@ function AppContent() {
         const res = await axios.get('/auth/check', { withCredentials: true })
         dispatch(setUser(res.data.user))
       } catch (err) {
-        console.log(err)
-        dispatch(clearUser())
+        // 로그인 안 된 상태는 정상 → user 없음으로 간주
+        console.log('🔒 로그인 안 되어 있음. 무시:', err.response?.status)
+        // ❌ dispatch(clearUser()) 제거!
       }
     }
+
     checkAuth()
   }, [dispatch])
 
