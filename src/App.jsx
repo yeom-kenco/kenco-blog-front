@@ -13,6 +13,7 @@ import SignupPage from './pages/SignupPage'
 import MyPage from './pages/MyPage'
 import PrivateRoute from './routes/PrivateRoute'
 import Layout from './components/layout/Layout'
+import FloatingWriteButton from './components/FloatingWriteButton'
 import './styles/reset.css'
 import './styles/variables.css'
 import './styles/global.css'
@@ -37,7 +38,7 @@ function App() {
   return (
     <BrowserRouter>
       <ToastContainer
-        position="bottom-right"
+        position="top-right"
         autoClose={3000}
         hideProgressBar={false}
         newestOnTop={false}
@@ -54,8 +55,15 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignupPage />} />
-          <Route path="/write" element={<WritePage />} />
           <Route path="/posts/:id" element={<PostDetailPage />} />
+          <Route
+            path="/write"
+            element={
+              <PrivateRoute>
+                <WritePage />
+              </PrivateRoute>
+            }
+          />
           <Route
             path="/mypage"
             element={
@@ -66,6 +74,8 @@ function App() {
           />
         </Route>
       </Routes>
+      {/* ✅ write 페이지가 아닐 때만 FloatingWriteButton 노출 */}
+      {!location.pathname.startsWith('/write') && <FloatingWriteButton />}
     </BrowserRouter>
   )
 }

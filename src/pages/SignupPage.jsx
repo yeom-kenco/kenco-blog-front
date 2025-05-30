@@ -31,7 +31,7 @@ export default function SignupPage() {
           <div className="signup-title">
             <img src={watermelonIcon} alt="수박" />
           </div>
-          <input name="username" placeholder="이름(닉네임)" onChange={handleChange} required />
+          <input name="username" placeholder="이름 (닉네임)" onChange={handleChange} required />
           <input name="email" placeholder="이메일" onChange={handleChange} required />
           <input
             name="password"

@@ -1,13 +1,21 @@
 import { useSelector } from 'react-redux'
-import { Navigate } from 'react-router-dom'
+import { Navigate, useLocation } from 'react-router-dom'
+import { useEffect } from 'react'
+import { toast } from 'react-toastify'
 
 export default function PrivateRoute({ children }) {
-  const { isAuthenticated, authChecked } = useSelector(state => state.auth)
+  const { isAuthenticated } = useSelector(state => state.auth)
+  const location = useLocation()
 
-  if (!authChecked) {
-    // 아직 인증 확인 안 끝났으면 아무것도 안 보여줌
-    return <p>⏳ 인증 확인 중...</p>
+  useEffect(() => {
+    if (!isAuthenticated) {
+      toast.error('로그인 후 이용해주세요.')
+    }
+  }, [isAuthenticated])
+
+  if (!isAuthenticated) {
+    return <Navigate to="/login" replace state={{ from: location }} />
   }
 
-  return isAuthenticated ? children : <Navigate to="/login" />
+  return children
 }

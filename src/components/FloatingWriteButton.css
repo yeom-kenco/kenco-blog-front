@@ -1,0 +1,32 @@
+.floating-write-btn {
+  position: fixed;
+  bottom: 24px;
+  right: 6px;
+  width: 65px;
+  height: 65px;
+  background-color: white;
+  color: var(--color-primary);
+  border: none;
+  border-radius: 50%;
+  font-size: 0.85rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  z-index: 999;
+  transition: transform 0.2s;
+}
+
+.floating-write-btn:hover {
+  transform: scale(1.1);
+  background-color: var(--color-accent);
+  color: white;
+}
+
+/* ✅ 데스크탑에서 .container 기준으로 위치 이동 */
+@media screen and (min-width: 769px) {
+  .floating-write-btn {
+    right: calc(50% - 430px);
+    width: 85px;
+    height: 85px;
+    font-size: 1.1rem;
+  }
+}
