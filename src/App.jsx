@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
 import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { setUser, clearUser } from './store/authSlice'
@@ -19,27 +19,28 @@ import './styles/variables.css'
 import './styles/global.css'
 import './styles/media.css'
 
-function App() {
+function AppContent() {
   const dispatch = useDispatch()
+  const location = useLocation() // ✅ 수정된 부분
 
   useEffect(() => {
     const checkAuth = async () => {
       try {
         const res = await axios.get('/auth/check', { withCredentials: true })
-        dispatch(setUser(res.data.user)) // ✅ 토큰 유효 → 로그인 유지
+        dispatch(setUser(res.data.user))
       } catch (err) {
         console.log(err)
-        dispatch(clearUser()) // ❌ 토큰 만료 → 강제 로그아웃
+        dispatch(clearUser())
       }
     }
     checkAuth()
   }, [dispatch])
 
   return (
-    <BrowserRouter>
+    <>
       <ToastContainer
         position="top-right"
-        autoClose={3000}
+        autoClose={2000}
         hideProgressBar={false}
         newestOnTop={false}
         closeOnClick
@@ -50,6 +51,7 @@ function App() {
         bodyClassName="custom-toast-body"
         progressClassName="custom-toast-progress"
       />
+
       <Routes>
         <Route element={<Layout />}>
           <Route path="/" element={<HomePage />} />
@@ -74,8 +76,18 @@ function App() {
           />
         </Route>
       </Routes>
-      {/* ✅ write 페이지가 아닐 때만 FloatingWriteButton 노출 */}
+
+      {/* ✅ React Router의 location 사용 */}
       {!location.pathname.startsWith('/write') && <FloatingWriteButton />}
+    </>
+  )
+}
+
+// 🔁 App에 BrowserRouter 래핑
+function App() {
+  return (
+    <BrowserRouter>
+      <AppContent />
     </BrowserRouter>
   )
 }
