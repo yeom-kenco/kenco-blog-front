@@ -1,0 +1,279 @@
+.mypage-wrapper {
+  display: flex;
+  justify-content: center;
+  padding: 3rem 1rem;
+  min-height: 100vh;
+  font-family: 'Pretendard', sans-serif;
+}
+
+.mypage-card {
+  background: #fff;
+  padding: 2.5rem;
+  border-radius: 12px;
+  max-width: 720px;
+  width: 100%;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+
+  animation: fadeUp 0.6s ease-out forwards;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+@keyframes fadeUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.mypage-card h1 {
+  color: var(--blue-dark);
+}
+
+.mypage-section {
+  margin-top: 2rem;
+}
+
+.mypage-section h3 {
+  font-size: 1.1rem;
+  margin-bottom: 0.8rem;
+}
+
+.mypage-section input {
+  display: block;
+  margin-bottom: 0.5rem;
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  width: 97%;
+  font-size: 1rem;
+}
+
+.mypage-section input:focus {
+  outline: none;
+  border: 1px solid var(--color-accent);
+}
+
+.mypage-section button {
+  background-color: var(--color-accent);
+  color: white;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.95rem;
+}
+.mypage-section button:hover {
+  background-color: var(--color-primary);
+}
+
+.mypage-section ul {
+  list-style: none;
+  padding-left: 0;
+  color: #333;
+  font-size: 0.95rem;
+}
+
+.mypage-avatar {
+  width: 100px;
+  border-radius: 50%;
+  margin-bottom: 1rem;
+}
+
+.mypage-footer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 3rem;
+}
+
+.mypage-danger {
+  background-color: #e53935;
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.95rem;
+}
+
+.mypage-danger:hover {
+  background-color: #e25858 !important;
+}
+
+.mypage-profile {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.avatar-preview {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.name-edit {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.mypage-tabs {
+  display: flex;
+  gap: 8px;
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 1rem;
+}
+
+.mypage-tabs button {
+  background: none;
+  border: none;
+  padding: 8px 14px;
+  font-size: 0.95rem;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: border 0.2s;
+}
+
+.mypage-tabs button.active {
+  border-bottom: 2px solid var(--color-accent);
+  font-weight: bold;
+  color: var(--color-accent);
+}
+
+.mypage-tab-content {
+  margin-top: 1.5rem;
+}
+
+.mypage-settings input {
+  display: block;
+  margin-bottom: 0.5rem;
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  width: 100%;
+  font-size: 1rem;
+}
+
+.name-edit-row {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.name-edit-row .mypage-btn {
+  height: 42px;
+  padding: 0 14px;
+  font-size: 0.95rem;
+}
+
+.name-edit-row input {
+  flex: 1;
+}
+
+.password-change {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 8px;
+}
+.name-edit-row input,
+.password-change input,
+.password-change button {
+  width: 100%;
+  box-sizing: border-box; /* ✅ padding 포함해 100% 처리 */
+}
+
+.mypage-btn {
+  background-color: var(--color-accent);
+  color: white;
+  padding: 10px 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  white-space: nowrap;
+}
+
+.mypage-btn:hover {
+  background-color: var(--color-primary);
+}
+
+.comment-post-card {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.comment-preview-group {
+  display: flex;
+  flex-direction: column;
+  padding-left: 8px;
+  margin-top: 2px;
+  margin-bottom: 5px;
+}
+
+.comment-preview {
+  font-size: 1rem;
+  color: #2c2c2c;
+  margin-bottom: 2px;
+}
+
+@media screen and (max-width: 768px) {
+  .name-edit-row {
+    flex-direction: column;
+  }
+
+  .mypage-btn {
+    width: 100%;
+  }
+
+  .avatar-preview input {
+    width: 100%;
+  }
+
+  .password-change input {
+    width: 100%;
+  }
+  .name-edit-row {
+    flex-direction: column;
+  }
+
+  .name-edit-row input,
+  .name-edit-row .mypage-btn {
+    width: 100%;
+  }
+}
+
+/* 데스크탑은 전체 라벨, 모바일은 간략화 */
+.mypage-tabs .mobile {
+  display: none;
+}
+.mypage-tabs .desktop {
+  display: inline;
+}
+
+@media (max-width: 480px) {
+  .mypage-tabs .desktop {
+    display: none;
+  }
+  .mypage-tabs .mobile {
+    display: inline;
+    font-size: 0.9rem;
+  }
+  .mypage-card h1 {
+    font-size: 1.4rem;
+  }
+
+  .mypage-section h3 {
+    font-size: 0.9rem;
+    margin-bottom: 0.6rem;
+  }
+
+  .comment-preview {
+    font-size: 0.8rem;
+  }
+}
