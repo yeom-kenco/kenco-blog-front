@@ -21,16 +21,16 @@ export default function MyPage() {
 
   useEffect(() => {
     const fetchAll = async () => {
-      const res1 = await axios.get('/users/me/posts', { withCredentials: true })
+      const res1 = await axios.get(`/posts?author=${user._id}`)
       const res2 = await axios.get('/users/me/liked', { withCredentials: true })
       const res3 = await axios.get('/users/me/comments', { withCredentials: true })
 
-      setMyPosts(res1.data)
+      setMyPosts(res1.data.posts)
       setLikedPosts(res2.data)
       setMyComments(res3.data)
     }
     fetchAll()
-  }, [])
+  }, [user._id])
 
   const handleUpdate = async () => {
     try {
