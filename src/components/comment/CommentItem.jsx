@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import axios from '../../api/axios'
 import { useSelector } from 'react-redux'
+import { toast } from 'react-toastify'
 
 export default function CommentItem({ comment, onDelete, onUpdate }) {
   const { user } = useSelector(state => state.auth)
@@ -14,8 +15,9 @@ export default function CommentItem({ comment, onDelete, onUpdate }) {
     try {
       await axios.delete(`/comments/${comment._id}`, { withCredentials: true })
       onDelete(comment._id)
+      toast.success('댓글을 삭제했습니다.')
     } catch (err) {
-      alert('삭제 실패: ' + err.response?.data?.message)
+      toast.error('삭제 실패: ' + err.response?.data?.message)
     }
   }
 
@@ -28,14 +30,19 @@ export default function CommentItem({ comment, onDelete, onUpdate }) {
       )
       onUpdate(comment._id, editContent)
       setEditMode(false)
+      toast.success('댓글을 수정했습니다.')
     } catch (err) {
-      alert('수정 실패: ' + err.response?.data?.message)
+      toast.error('수정 실패: ' + err.response?.data?.message)
     }
   }
 
   return (
-    <div style={{ borderBottom: '1px solid #ccc', padding: '8px 0' }}>
-      <strong>{comment.author.username}</strong>
+    <div className="comment-item">
+      <div className="comment-item-header">
+        <span className="comment-author">🍉 {comment.author.username}</span>
+        <span className="comment-date">{new Date(comment.createdAt).toLocaleDateString()}</span>
+      </div>
+
       {editMode ? (
         <>
           <textarea
@@ -44,18 +51,21 @@ export default function CommentItem({ comment, onDelete, onUpdate }) {
             rows={2}
             style={{ width: '100%', resize: 'none' }}
           />
-          <button onClick={handleUpdate}>💾 저장</button>
-          <button onClick={() => setEditMode(false)}>❌ 취소</button>
+          <div className="comment-actions">
+            <button onClick={handleUpdate}>💾</button>
+            <button onClick={() => setEditMode(false)}>❌</button>
+          </div>
         </>
       ) : (
-        <p>{comment.content}</p>
-      )}
-
-      {isMyComment && !editMode && (
-        <div>
-          <button onClick={() => setEditMode(true)}>✏️ 수정</button>
-          <button onClick={handleDelete}>🗑️ 삭제</button>
-        </div>
+        <>
+          <p className="comment-content">{comment.content}</p>
+          {isMyComment && (
+            <div className="comment-actions">
+              <button onClick={() => setEditMode(true)}>✏️</button>
+              <button onClick={handleDelete}>🗑️</button>
+            </div>
+          )}
+        </>
       )}
     </div>
   )
