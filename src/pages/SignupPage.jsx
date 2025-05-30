@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import axios from '../api/axios'
 import { useNavigate } from 'react-router-dom'
+import watermelonIcon from '../assets/watermelon-icon-2.png'
+import './SignupPage.css'
 
 export default function SignupPage() {
   const navigate = useNavigate()
@@ -22,12 +24,24 @@ export default function SignupPage() {
   }
 
   return (
-    <form onSubmit={handleSignup}>
-      <h2>회원가입</h2>
-      <input name="username" placeholder="사용자 이름" onChange={handleChange} />
-      <input name="email" placeholder="이메일" onChange={handleChange} />
-      <input name="password" type="password" placeholder="비밀번호" onChange={handleChange} />
-      <button type="submit">회원가입</button>
-    </form>
+    <div className="signup-page">
+      <div className="signup-wrapper">
+        <form onSubmit={handleSignup} className="signup-form">
+          <div className="signup-title">
+            <img src={watermelonIcon} alt="수박" />
+          </div>
+          <input name="username" placeholder="이름(닉네임)" onChange={handleChange} required />
+          <input name="email" placeholder="이메일" onChange={handleChange} required />
+          <input
+            name="password"
+            type="password"
+            placeholder="비밀번호"
+            onChange={handleChange}
+            required
+          />
+          <button type="submit">회원가입</button>
+        </form>
+      </div>
+    </div>
   )
 }

@@ -1,0 +1,104 @@
+.signup-page {
+  height: 100vh; /* ✅ 화면 높이 100% */
+  margin: -30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.signup-wrapper {
+  background: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(6px);
+  border-radius: 16px;
+  padding: 40px 32px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+  max-width: 360px;
+  width: 100%;
+}
+.signup-wrapper {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeUp 0.6s ease forwards;
+}
+
+@keyframes fadeUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.signup-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.signup-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  justify-content: center;
+}
+
+.signup-title img {
+  width: 45px;
+  height: auto;
+}
+
+.signup-form input {
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+.signup-form input:focus {
+  outline: none;
+  border: 1px solid var(--color-primary);
+  transition: border 0.2s ease;
+}
+
+.signup-form button {
+  background-color: var(--color-primary);
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.signup-form button:hover {
+  background-color: #e53935;
+}
+
+@media (max-height: 600px) {
+  .signup-page {
+    align-items: flex-start;
+    padding-top: 60px;
+  }
+}
+
+@media (max-width: 480px) {
+  .signup-wrapper {
+    padding: 24px 16px;
+    max-width: 280px;
+  }
+
+  .signup-title img {
+    width: 35px;
+  }
+
+  .signup-form input {
+    font-size: 0.9rem;
+    padding: 10px;
+  }
+
+  .signup-form button {
+    font-size: 0.9rem;
+    padding: 10px;
+  }
+}
