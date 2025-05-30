@@ -2,6 +2,8 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { setUser, clearUser } from './store/authSlice'
+import 'react-toastify/dist/ReactToastify.css'
+import { ToastContainer } from 'react-toastify'
 import axios from './api/axios'
 import HomePage from './pages/HomePage'
 import WritePage from './pages/WritePage'
@@ -34,6 +36,19 @@ function App() {
 
   return (
     <BrowserRouter>
+      <ToastContainer
+        position="bottom-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        pauseOnHover
+        draggable
+        theme="colored"
+        toastClassName="custom-toast"
+        bodyClassName="custom-toast-body"
+        progressClassName="custom-toast-progress"
+      />
       <Routes>
         <Route element={<Layout />}>
           <Route path="/" element={<HomePage />} />

@@ -5,7 +5,7 @@ import { clearUser } from '../../store/authSlice'
 import axios from '../../api/axios'
 import 'bootstrap-icons/font/bootstrap-icons.css'
 import watermelonIcon from '../../assets/watermelon-icon-1.png'
-
+import { toast } from 'react-toastify'
 import './Header.css'
 
 export default function Header() {
@@ -14,13 +14,14 @@ export default function Header() {
   const navigate = useNavigate()
 
   const handleLogout = async () => {
+    if (!window.confirm('로그아웃 하시겠습니까?')) return
     try {
       await axios.post('/auth/logout', {}, { withCredentials: true })
       dispatch(clearUser())
+      toast.success('로그아웃 되었습니다.')
       navigate('/')
     } catch (err) {
-      console.log(err)
-      alert('로그아웃 실패')
+      toast.error('로그아웃 실패: ' + err.response?.data?.message)
     }
   }
 

@@ -4,8 +4,8 @@ import { useDispatch } from 'react-redux'
 import { setUser } from '../store/authSlice'
 import { useNavigate } from 'react-router-dom'
 import './LoginPage.css'
-
-import watermelonIcon from '../assets/watermelon-icon-2.png' // ✅ 이미지 import
+import { toast } from 'react-toastify'
+import watermelonIcon from '../assets/watermelon-icon-2.png'
 
 export default function LoginPage() {
   const dispatch = useDispatch()
@@ -21,10 +21,10 @@ export default function LoginPage() {
     try {
       const res = await axios.post('/auth/login', form, { withCredentials: true })
       dispatch(setUser(res.data.user))
-      alert(res.data.message)
+      toast.success(res.data.message)
       navigate('/')
     } catch (err) {
-      alert('로그인 실패: ' + err.response?.data?.message)
+      toast.error('로그인 실패: ' + err.response?.data?.message)
     }
   }
 

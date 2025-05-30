@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { setUser } from '../store/authSlice'
 import { clearUser } from '../store/authSlice'
 import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
 export default function MyPage() {
   const [myPosts, setMyPosts] = useState([])
@@ -21,9 +22,9 @@ export default function MyPage() {
     try {
       const res = await axios.patch('/users/me', { username }, { withCredentials: true })
       dispatch(setUser(res.data.user))
-      alert('이름 수정 완료!')
+      toast.success('이름 수정 완료!')
     } catch (err) {
-      alert('수정 실패: ' + err.response?.data?.message)
+      toast.error('수정 실패: ' + err.response?.data?.message)
     }
   }
 
@@ -38,9 +39,9 @@ export default function MyPage() {
         withCredentials: true,
       })
       dispatch(setUser(res.data.user))
-      alert('업로드 완료!')
+      toast.success('업로드 완료!')
     } catch (err) {
-      alert('업로드 실패: ' + err.response?.data?.message)
+      toast.error('업로드 실패: ' + err.response?.data?.message)
     }
   }
 
@@ -49,21 +50,21 @@ export default function MyPage() {
     try {
       await axios.delete('/users/me', { withCredentials: true })
       dispatch(clearUser())
-      alert('회원 탈퇴가 완료되었습니다.')
+      toast.success('회원 탈퇴가 완료되었습니다.')
       navigate('/')
     } catch (err) {
-      alert('회원 탈퇴 실패: ' + err.response?.data?.message)
+      toast.error('회원 탈퇴 실패: ' + err.response?.data?.message)
     }
   }
 
   const handleChangePassword = async () => {
     try {
       await axios.patch('/users/me/password', { currentPw, newPw }, { withCredentials: true })
-      alert('비밀번호가 성공적으로 변경되었습니다.')
+      toast.success('비밀번호가 성공적으로 변경되었습니다.')
       setCurrentPw('')
       setNewPw('')
     } catch (err) {
-      alert('변경 실패: ' + err.response?.data?.message)
+      toast.error('변경 실패: ' + err.response?.data?.message)
     }
   }
 

@@ -3,6 +3,8 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import axios from '../api/axios'
 import CommentItem from '../components/comment/CommentItem'
+import { toast } from 'react-toastify'
+import watermelon from '../assets/watermelon-icon-3.png'
 
 export default function PostDetailPage() {
   const { id } = useParams()
@@ -42,7 +44,7 @@ export default function PostDetailPage() {
       setLiked(res.data.liked)
       setLikeCount(prev => (res.data.liked ? prev + 1 : prev - 1))
     } catch (err) {
-      alert('좋아요 실패: ' + err.response?.data?.message)
+      toast.error('좋아요 실패: ' + err.response?.data?.message)
     }
   }
 
@@ -67,7 +69,7 @@ export default function PostDetailPage() {
       setComments(prev => [newComment, ...prev])
       setCommentInput('')
     } catch (err) {
-      alert('댓글 작성 실패: ' + err.response?.data?.message)
+      toast.error('댓글 작성 실패: ' + err.response?.data?.message)
     }
   }
 
@@ -85,10 +87,10 @@ export default function PostDetailPage() {
     if (!window.confirm('정말 삭제할까요?')) return
     try {
       await axios.delete(`/posts/${id}`)
-      alert('삭제되었습니다')
+      toast.success('삭제되었습니다')
       navigate('/')
     } catch (err) {
-      alert('삭제 실패: ' + err.response?.data?.message)
+      toast.error('삭제 실패: ' + err.response?.data?.message)
     }
   }
 
@@ -96,7 +98,13 @@ export default function PostDetailPage() {
     navigate(`/write?id=${post._id}`, { state: { post } })
   }
 
-  if (!post) return <p>로딩 중...</p>
+  if (!post)
+    return (
+      <div className="loading-wrapper">
+        <img src={watermelon} alt="수박 로딩" className="loading-watermelon" />
+        <p className="loading-text">열심히 수박 따는 중</p>
+      </div>
+    )
 
   return (
     <div>

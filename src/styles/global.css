@@ -30,3 +30,20 @@ main {
     padding-top: 100px;
   }
 }
+.custom-toast {
+  background-color: white !important; /* 수박껍질색 */
+  color: rgb(68, 171, 202) !important;
+  font-weight: bold;
+  border-radius: 12px !important;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  padding: 14px 18px !important;
+  font-family: 'Pretendard', sans-serif;
+}
+
+.custom-toast-body {
+  font-size: 15px;
+}
+
+.custom-toast-progress {
+  background: linear-gradient(to right, var(--color-accent), #fa7268) !important;
+}

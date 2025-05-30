@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import axios from '../api/axios'
 import ReactQuill from 'react-quill'
 import 'react-quill/dist/quill.snow.css'
+import { toast } from 'react-toastify'
 
 export default function WritePage() {
   const navigate = useNavigate()
@@ -61,15 +62,15 @@ export default function WritePage() {
     try {
       if (editingPost) {
         await axios.put(`/posts/${editingPost._id}`, { title, content: finalContent })
-        alert('수정 완료!')
+        toast.success('수정 완료!')
         navigate(`/posts/${editingPost._id}`)
       } else {
         await axios.post('/posts', { title, content: finalContent })
-        alert('게시글 작성 완료!')
+        toast.success('게시글 작성 완료!')
         navigate('/')
       }
     } catch (err) {
-      alert('작성 실패: ' + err.response?.data?.message)
+      toast.error('작성 실패: ' + err.response?.data?.message)
     }
   }
 
