@@ -1,8 +1,8 @@
 import axios from 'axios'
 
 const instance = axios.create({
-  baseURL: 'http://localhost:5000/api',
-  withCredentials: true, // JWT 쿠키 자동 포함
+  baseURL: `${import.meta.env.VITE_API_URL}/api`, // ✅ 환경변수 사용
+  withCredentials: true,
 })
 
 export default instance
