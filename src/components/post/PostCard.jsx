@@ -1,11 +1,12 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import watermelonLoading from '../../assets/watermelon-icon-3.png' // 로딩용
-import defaultThumbnail from '../../assets/default-thumbnail.jpeg' // 실제 썸네일용
+import watermelonLoading from '../../assets/watermelon-icon-3.png'
+import defaultThumbnail from '../../assets/default-thumbnail.jpeg'
 import './PostCard.css'
 
+// 썸네일 추출 유틸
 function extractThumbnail(content) {
-  const match = content.match(/<img[^>]+src="([^">]+)"/)
+  const match = content?.match(/<img[^>]+src="([^">]+)"/)
   return match ? match[1] : null
 }
 
@@ -30,10 +31,17 @@ export default function PostCard({ post }) {
           onLoad={() => setImgLoaded(true)}
         />
       </div>
-      <h3 className="post-title">{post.title}</h3>
-      <p className="post-meta">
-        {post.author.username} · {new Date(post.createdAt).toLocaleDateString()}
-      </p>
+
+      <div className="post-content">
+        <h3 className="post-title">{post.title}</h3>
+        <div className="post-meta">
+          <span>{post.author?.username}</span>
+          <span>{new Date(post.createdAt).toLocaleDateString()}</span>
+        </div>
+        <div className="post-stats">
+          ❤️ {post.likes?.length || 0} 💬 {post.commentCount || 0}
+        </div>
+      </div>
     </div>
   )
 }

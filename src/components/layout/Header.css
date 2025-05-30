@@ -20,7 +20,7 @@
     rgba(0, 0, 0, 1),
     rgba(0, 0, 0, 1),
     rgba(0, 0, 0, 0.9),
-    rgba(0, 0, 0, 0.3),
+    rgba(0, 0, 0, 0.4),
     rgba(0, 0, 0, 0)
   );
   mask-image: linear-gradient(
@@ -30,7 +30,7 @@
     rgba(0, 0, 0, 1),
     rgba(0, 0, 0, 1),
     rgba(0, 0, 0, 0.9),
-    rgba(0, 0, 0, 0.3),
+    rgba(0, 0, 0, 0.4),
     rgba(0, 0, 0, 0)
   );
 }
@@ -77,11 +77,11 @@
   background-color: white;
   color: var(--color-accent);
   cursor: pointer;
-  font-size: 0.9rem;
+  font-size: 1.2rem;
 }
 
 .header-actions i {
-  font-size: 1.2rem;
+  font-size: 1.5rem;
   color: var(--color-accent);
   cursor: pointer;
 }
@@ -100,17 +100,24 @@ i:hover {
     margin-top: 8px;
   }
 
+  .header-actions i {
+    font-size: 1rem;
+  }
+  .header-actions button {
+    font-size: 1rem;
+  }
+
   .logo {
-    font-size: 1.2rem;
+    font-size: 1.4rem;
   }
 
   .header-subtitle {
-    font-size: 0.75rem;
+    display: none;
   }
 }
 
 .header-main img {
-  width: 45px;
+  width: 40px;
   height: auto;
   transform: rotate(25deg);
 }
